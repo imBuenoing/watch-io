@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (password === '123qwe') {
             errorMessage.textContent = '';
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbx18zfAbDvnMSXXda-Y_VCf0DLKVaQGzbDTZtLGDVPlgG6sw2ZJ_inL0rR72JykIDJHKw/exec'; // <-- Replace with your Google Apps Script Web App URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyJvNIZfBQ_CYvKnmeXaR8_2weYJP-yCfUgiQUS7uMV5esKrCi5yB9yMpbI0-3g6FzjMA/exec'; // <-- Replace with your Google Apps Script Web App URL
             const formData = new FormData(this);
 
             fetch(scriptURL, { method: 'POST', body: formData })
