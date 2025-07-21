@@ -1,43 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="PhoneNumber" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit">Login</button>
-            <p id="error-message" class="error"></p>
-        </form>
-    </div>
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const overlay = document.getElementById('overlay');
+    const closeBtn = document.getElementById('closeBtn');
+    const errorMessage = document.getElementById('error-message');
+    const videoContainer = document.getElementById('video-container');
+    const video1Btn = document.getElementById('video1Btn');
+    const video2Btn = document.getElementById('video2Btn');
 
-    <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <span class="close-btn" id="closeBtn">×</span>
-            
-            <!-- Video container will be populated by JavaScript -->
-            <div id="video-container"></div>
+    // --- Masked Video Links ---
+    // Store your Google Drive embed links here.
+    const videoLinks = {
+        video1: 'https://drive.google.com/file/d/13KeYpl9iWjiHV4Bf9h0gFyu8hVmDejJ6/preview',
+        video2: 'https://drive.google.com/file/d/18dDXIpgw1Qkq6Co4-nC6w7soGNBJLXaJ/preview'
+    };
+    // -------------------------
 
-            <!-- Navigation for videos -->
-            <div class="video-nav">
-                <button id="video1Btn">Video 1</button>
-                <button id="video2Btn">Video 2</button>
-            </div>
-        </div>
-    </div>
+    // Function to load a video into the container
+    function loadVideo(videoKey) {
+        // Clear the container first
+        videoContainer.innerHTML = '';
+        
+        const videoUrl = videoLinks[videoKey];
+        if (videoUrl) {
+            const iframe = document.createElement('iframe');
+            iframe.src = videoUrl;
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'autoplay; encrypted-media');
+            iframe.setAttribute('allowfullscreen', 'true');
+            videoContainer.appendChild(iframe);
+        }
+    }
 
-    <script src="script.js"></script>
-</body>
-</html>
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+
+        if (password === '123qwe') {
+            errorMessage.textContent = '';
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx18zfAbDvnMSXXda-Y_VCf0DLKVaQGzbDTZtLGDVPlgG6sw2ZJ_inL0rR72JykIDJHKw/exec'; // <-- Replace with your Google Apps Script Web App URL
+            const formData = new FormData(this);
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => console.log('Success!', response))
+                .catch(error => console.error('Error!', error.message));
+
+            // Show the overlay and load the first video by default
+            overlay.style.display = 'flex';
+            loadVideo('video1');
+
+        } else {
+            errorMessage.textContent = 'Incorrect password.';
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        // Clear the video container when closing to stop playback
+        videoContainer.innerHTML = '';
+    });
+
+    // Navigation button event listeners
+    video1Btn.addEventListener('click', () => loadVideo('video1'));
+    video2Btn.addEventListener('click', () => loadVideo('video2'));
+});
