@@ -8,7 +8,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     if (password === '123qwe') {
         errorMessage.textContent = '';
 
-        const scriptURL = 'YOUR_WEB_APP_URL'; // <-- Replace with your Google Apps Script Web App URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx18zfAbDvnMSXXda-Y_VCf0DLKVaQGzbDTZtLGDVPlgG6sw2ZJ_inL0rR72JykIDJHKw/exec'; // <-- Replace with your Google Apps Script Web App URL
         const formData = new FormData(this);
 
         fetch(scriptURL, { method: 'POST', body: formData})
