@@ -1,27 +1,43 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="PhoneNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p id="error-message" class="error"></p>
+        </form>
+    </div>
 
-    const phone = document.getElementById('phone').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('error-message');
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-btn" id="closeBtn">×</span>
+            
+            <!-- Video container will be populated by JavaScript -->
+            <div id="video-container"></div>
 
-    if (password === '123qwe') {
-        errorMessage.textContent = '';
+            <!-- Navigation for videos -->
+            <div class="video-nav">
+                <button id="video1Btn">Video 1</button>
+                <button id="video2Btn">Video 2</button>
+            </div>
+        </div>
+    </div>
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbx18zfAbDvnMSXXda-Y_VCf0DLKVaQGzbDTZtLGDVPlgG6sw2ZJ_inL0rR72JykIDJHKw/exec'; // <-- Replace with your Google Apps Script Web App URL
-        const formData = new FormData(this);
-
-        fetch(scriptURL, { method: 'POST', body: formData})
-            .then(response => console.log('Success!', response))
-            .catch(error => console.error('Error!', error.message));
-
-        document.getElementById('overlay').style.display = 'flex';
-
-    } else {
-        errorMessage.textContent = 'Incorrect password.';
-    }
-});
-
-document.getElementById('closeBtn').addEventListener('click', function() {
-    document.getElementById('overlay').style.display = 'none';
-});
+    <script src="script.js"></script>
+</body>
+</html>
